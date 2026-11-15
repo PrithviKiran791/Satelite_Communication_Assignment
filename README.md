@@ -589,25 +589,6 @@ The following roadmap items are planned for future major releases:
 
 ---
 
-## 14. Screenshots & Visual Documentation
-
-*(To add project screenshots, save your captures to `docs/screenshots/` and update these relative links)*
-
-### Overview Dashboard
-![Overview Dashboard](docs/screenshots/overview-dashboard.png)
-*Figure 1: SATLINK Overview Dashboard displaying brutalist telemetry cards, 3D Earth visualization, and active transponder parameters.*
-
-### Simulation Configuration
-![Simulation Configuration Modal](docs/screenshots/simulation-config.png)
-*Figure 2: Comprehensive configuration modal with step controls and quick orbit preset chips.*
-
-### Interactive 3D Geospatial Mission Control
-![3D Geospatial Mission Control](docs/screenshots/analytics-3d-mission-control.png)
-*Figure 3: Interactive 3D Earth in the Analytics view showing BaseStation lattice towers, orbiting spacecraft, RF communication beam, and telemetry HUD.*
-
-### Parametric Sweeps & Environmental Stress Analysis
-![Analytics Sweeps & Stress Analysis](docs/screenshots/environmental-stress.png)
-*Figure 4: Frequency vs. FSPL, Distance vs. Received Power, Bandwidth vs. C/N, and the 7-scenario environmental stress breakdown table.*
 
 ---
 
