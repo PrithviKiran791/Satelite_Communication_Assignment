@@ -211,6 +211,7 @@ export function SimulationForm({
   });
 
   const [hasSuccessNotification, setHasSuccessNotification] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const notificationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -297,8 +298,9 @@ export function SimulationForm({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isValid) return;
+    if (!isValid || isSubmitting) return;
 
+    setIsSubmitting(true);
     onRunSimulation(parsedInputs);
     setHasSuccessNotification(true);
 
@@ -307,6 +309,7 @@ export function SimulationForm({
     }
     notificationTimeoutRef.current = setTimeout(() => {
       setHasSuccessNotification(false);
+      setIsSubmitting(false);
     }, 3000);
   };
 
@@ -536,15 +539,15 @@ export function SimulationForm({
           <button
             type="submit"
             form="sim-form"
-            disabled={!isValid}
+            disabled={!isValid || isSubmitting}
             className={`flex items-center gap-2 px-6 py-2.5 text-xs font-bold uppercase tracking-widest transition-all cursor-pointer ${
-              isValid
+              isValid && !isSubmitting
                 ? "bg-white text-black hover:bg-neutral-200 border border-white shadow-[0_2px_12px_rgba(255,255,255,0.2)] active:scale-95"
                 : "bg-neutral-800 text-neutral-500 border border-neutral-700 cursor-not-allowed"
             }`}
           >
-            <Play size={13} className={isValid ? "fill-black text-black" : "text-neutral-500"} />
-            Run Simulation
+            <Play size={13} className={isValid && !isSubmitting ? "fill-black text-black" : "text-neutral-500"} />
+            {isSubmitting ? "Initializing..." : "Run Simulation"}
           </button>
         </div>
       </div>

@@ -5,6 +5,7 @@ import { LandingPage } from "./components/landing/LandingPage";
 import { AnalyticsDashboard } from "./components/analytics/AnalyticsDashboard";
 import { SettingsView } from "./components/settings/SettingsView";
 import { SimulationForm } from "./components/simulation/SimulationForm";
+import { SimulationLoadingScreen } from "./components/simulation/SimulationLoadingScreen";
 import { ShootingStars } from "./components/ui/shooting-stars";
 import { StarsBackground } from "./components/ui/stars-background";
 import { DEFAULT_PARAMETERS } from "./simulation/constants";
@@ -13,6 +14,8 @@ import type { LinkBudgetInputs } from "./simulation/types";
 function App() {
   const [activeTab, setActiveTab] = useState("Landing");
   const [isConfigOpen, setIsConfigOpen] = useState(false);
+  const [isSimulating, setIsSimulating] = useState(false);
+  const [pendingInputs, setPendingInputs] = useState<LinkBudgetInputs | null>(null);
   const [parameters, setParameters] = useState<LinkBudgetInputs>(DEFAULT_PARAMETERS);
 
   const handleSelectTab = (tab: string) => {
@@ -32,14 +35,38 @@ function App() {
   };
 
   const handleRunSimulation = (newInputs: LinkBudgetInputs) => {
-    setParameters(newInputs);
     setIsConfigOpen(false);
+    setPendingInputs(newInputs);
+    setIsSimulating(true);
+  };
+
+  const handleSimulationComplete = (completedInputs: LinkBudgetInputs) => {
+    setParameters(completedInputs);
+    setIsSimulating(false);
+    setPendingInputs(null);
     setActiveTab("Analytics");
+  };
+
+  const handleSimulationCancel = () => {
+    setIsSimulating(false);
+    setPendingInputs(null);
+    setIsConfigOpen(true);
   };
 
   const handleResetToDefault = () => {
     setParameters(DEFAULT_PARAMETERS);
   };
+
+  // Dedicated Full-Screen Simulation Loading Experience
+  if (isSimulating && pendingInputs) {
+    return (
+      <SimulationLoadingScreen
+        inputs={pendingInputs}
+        onComplete={handleSimulationComplete}
+        onCancel={handleSimulationCancel}
+      />
+    );
+  }
 
   // Full-screen cinematic Landing Page (no header, no sidebar)
   if (activeTab === "Landing") {
