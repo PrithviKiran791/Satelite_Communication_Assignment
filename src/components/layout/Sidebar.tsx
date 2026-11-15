@@ -2,7 +2,6 @@
 import { useState, useMemo } from "react";
 import { Sidebar, SidebarBody, SidebarLink } from "../ui/sidebar";
 import {
-  LayoutDashboard,
   Satellite,
   ChartNoAxesCombined,
   Settings,
@@ -24,7 +23,7 @@ interface SidebarProps {
 }
 
 export default function AppSidebar({
-  activeTab = "Overview",
+  activeTab = "Analytics",
   onSelectTab,
   parameters = DEFAULT_PARAMETERS,
   onParametersChange,
@@ -37,16 +36,16 @@ export default function AppSidebar({
 
   const links = [
     {
-      label: "Overview",
+      label: "Landing Page",
       icon: (
-        <LayoutDashboard
+        <Globe2
           className={`h-4 w-4 shrink-0 transition-colors ${
-            activeTab === "Overview" ? "text-black" : "text-[#B8B8B8] group-hover/sidebar:text-white"
+            activeTab === "Landing" ? "text-black" : "text-[#B8B8B8] group-hover/sidebar:text-white"
           }`}
         />
       ),
-      onClick: () => onSelectTab?.("Overview"),
-      isActive: activeTab === "Overview",
+      onClick: () => onSelectTab?.("Landing"),
+      isActive: activeTab === "Landing",
     },
     {
       label: "Simulation Config",
@@ -151,14 +150,17 @@ export default function AppSidebar({
   return (
     <Sidebar open={open} setOpen={setOpen} animate={true}>
       <SidebarBody className="h-full justify-between gap-4">
-        <div className="flex flex-1 flex-col overflow-x-hidden overflow-y-auto custom-scrollbar pr-1">
+        <div className="flex flex-1 min-h-0 flex-col overflow-x-hidden overflow-y-auto custom-scrollbar pr-1">
           {/* Logo Section - Brutalist Aerospace */}
-          <div className="h-16 flex items-center px-1 border-b border-white/14 pb-3">
+          <div className="h-16 flex items-center px-1 border-b border-white/14 pb-3 shrink-0">
             {open ? (
-              <motion.div
+              <motion.button
+                type="button"
+                onClick={() => onSelectTab?.("Landing")}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="flex items-center gap-3.5 overflow-hidden"
+                className="flex items-center gap-3.5 overflow-hidden cursor-pointer text-left w-full focus:outline-none"
+                title="Return to Landing Page"
               >
                 <div className="w-8 h-8 rounded-none bg-white text-black flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(255,255,255,0.2)]">
                   <Radio className="text-black" size={17} />
@@ -171,11 +173,16 @@ export default function AppSidebar({
                     AEROSPACE // v2.0
                   </span>
                 </div>
-              </motion.div>
+              </motion.button>
             ) : (
-              <div className="w-8 h-8 rounded-none bg-white text-black flex items-center justify-center shrink-0 mx-auto shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+              <button
+                type="button"
+                onClick={() => onSelectTab?.("Landing")}
+                className="w-8 h-8 rounded-none bg-white text-black flex items-center justify-center shrink-0 mx-auto shadow-[0_0_15px_rgba(255,255,255,0.2)] cursor-pointer focus:outline-none"
+                title="Return to Landing Page"
+              >
                 <Radio className="text-black" size={17} />
-              </div>
+              </button>
             )}
           </div>
 
@@ -291,7 +298,7 @@ export default function AppSidebar({
         </div>
 
         {/* Minimal Glass Status Footer */}
-        <div className="pt-3 border-t border-white/14 flex flex-col gap-2">
+        <div className="pt-3 border-t border-white/14 flex flex-col gap-2 shrink-0 mt-auto">
           {open ? (
             <motion.div
               initial={{ opacity: 0 }}

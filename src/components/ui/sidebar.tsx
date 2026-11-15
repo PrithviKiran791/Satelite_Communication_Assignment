@@ -72,7 +72,7 @@ export const DesktopSidebar = ({
   return (
     <motion.div
       className={cn(
-        "h-full min-h-screen max-h-screen sticky top-0 px-4 py-5 hidden md:flex md:flex-col bg-[#050507]/80 backdrop-blur-2xl border-r border-white/14 w-[320px] shrink-0 z-30 shadow-[inset_-1px_0_0_rgba(255,255,255,0.06)] transition-colors overflow-hidden",
+        "h-screen h-[100dvh] min-h-screen sticky top-0 inset-y-0 px-4 py-5 hidden md:flex md:flex-col bg-[#050507]/90 backdrop-blur-2xl border-r border-white/14 w-[320px] shrink-0 z-30 shadow-[inset_-1px_0_0_rgba(255,255,255,0.06)] transition-colors overflow-hidden",
         className
       )}
       animate={{
@@ -97,7 +97,7 @@ export const MobileSidebar = ({
   return (
     <div
       className={cn(
-        "h-16 px-4 flex flex-row md:hidden items-center justify-between bg-[#050507]/85 backdrop-blur-xl border-b border-white/14 w-full z-40 sticky top-0",
+        "h-16 px-4 flex flex-row md:hidden items-center justify-between bg-[#050507]/85 backdrop-blur-xl border-b border-white/14 w-full z-40 sticky top-0 shrink-0",
         className
       )}
       {...props}
@@ -131,10 +131,7 @@ export const MobileSidebar = ({
               duration: 0.2,
               ease: "easeInOut",
             }}
-            className={cn(
-              "fixed h-full w-[320px] max-w-[85vw] inset-y-0 left-0 bg-[#08080a]/95 backdrop-blur-2xl p-6 z-[100] flex flex-col justify-between border-r border-white/20",
-              className
-            )}
+            className="fixed h-full h-[100dvh] w-[320px] max-w-[85vw] inset-y-0 left-0 bg-[#08080a]/95 backdrop-blur-2xl p-6 z-[100] flex flex-col justify-between border-r border-white/20 overflow-y-auto"
           >
             <div
               className="absolute right-6 top-6 z-50 p-2 border border-white/20 text-white hover:bg-white/20 cursor-pointer"

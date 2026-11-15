@@ -9,14 +9,21 @@
   box-sizing: border-box;
 }
 
-body {
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
   margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+body {
   min-width: 320px;
-  min-height: 100vh;
   font-family: var(--font-sans);
   background: #030303;
   color: #ffffff;
-  overflow-x: hidden;
   letter-spacing: -0.01em;
 }
 

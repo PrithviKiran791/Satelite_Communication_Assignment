@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Sidebar from "./components/layout/Sidebar";
 import Header from "./components/layout/Header";
-import Dashboard from "./components/dashboard/Dashboard";
+import { LandingPage } from "./components/landing/LandingPage";
 import { AnalyticsDashboard } from "./components/analytics/AnalyticsDashboard";
 import { SettingsView } from "./components/settings/SettingsView";
 import { SimulationForm } from "./components/simulation/SimulationForm";
@@ -11,7 +11,7 @@ import { DEFAULT_PARAMETERS } from "./simulation/constants";
 import type { LinkBudgetInputs } from "./simulation/types";
 
 function App() {
-  const [activeTab, setActiveTab] = useState("Overview");
+  const [activeTab, setActiveTab] = useState("Landing");
   const [isConfigOpen, setIsConfigOpen] = useState(false);
   const [parameters, setParameters] = useState<LinkBudgetInputs>(DEFAULT_PARAMETERS);
 
@@ -23,21 +23,50 @@ function App() {
     }
   };
 
-  const handleConfigOpenChange = (open: boolean) => {
-    setIsConfigOpen(open);
+  const handleStartSimulation = () => {
+    setIsConfigOpen(true);
+  };
+
+  const handleViewAnalytics = () => {
+    setActiveTab("Analytics");
   };
 
   const handleRunSimulation = (newInputs: LinkBudgetInputs) => {
     setParameters(newInputs);
     setIsConfigOpen(false);
+    setActiveTab("Analytics");
   };
 
   const handleResetToDefault = () => {
     setParameters(DEFAULT_PARAMETERS);
   };
 
+  // Full-screen cinematic Landing Page (no header, no sidebar)
+  if (activeTab === "Landing") {
+    return (
+      <div className="fixed inset-0 h-screen h-[100dvh] w-screen bg-[#030303] text-white overflow-hidden selection:bg-white selection:text-black">
+        <LandingPage
+          onStartSimulation={handleStartSimulation}
+          onViewAnalytics={handleViewAnalytics}
+        />
+
+        {/* Global Simulation Configuration Modal */}
+        {isConfigOpen && (
+          <SimulationForm
+            currentInputs={parameters}
+            onRunSimulation={handleRunSimulation}
+            onResetToDefault={handleResetToDefault}
+            onClose={() => setIsConfigOpen(false)}
+            isModal={true}
+          />
+        )}
+      </div>
+    );
+  }
+
+  // Mission Control Application Shell (Analytics & Settings)
   return (
-    <div className="relative h-screen w-screen bg-[#030303] text-white flex overflow-hidden selection:bg-white selection:text-black">
+    <div className="fixed inset-0 h-screen h-[100dvh] w-screen bg-[#030303] text-white flex overflow-hidden selection:bg-white selection:text-black">
       {/* Space Atmosphere: Grid + Radial Lighting + Stars */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#030303]">
         {/* Subtle aerospace grid pattern */}
@@ -90,18 +119,9 @@ function App() {
         />
 
         <div className="flex-1 min-w-0 h-full overflow-y-auto overflow-x-hidden flex flex-col custom-scrollbar">
-          <Header activeTab={activeTab} />
+          <Header activeTab={activeTab} onNavigateLanding={() => setActiveTab("Landing")} />
 
           <div className="flex-1">
-            {activeTab === "Overview" && (
-              <Dashboard
-                parameters={parameters}
-                onParametersChange={setParameters}
-                isConfigOpen={isConfigOpen}
-                onConfigOpenChange={handleConfigOpenChange}
-              />
-            )}
-
             {activeTab === "Analytics" && (
               <AnalyticsDashboard
                 parameters={parameters}
