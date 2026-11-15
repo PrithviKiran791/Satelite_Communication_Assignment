@@ -1,0 +1,87 @@
+.star-border {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0.625rem 1.25rem;
+  border: 0;
+  border-radius: var(--star-border-radius, 10px);
+  background: var(--star-border-surface, #07070b);
+  color: var(--star-border-text, #ffffff);
+  font: inherit;
+  font-weight: 500;
+  line-height: 1.25;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease, background 0.2s ease;
+  user-select: none;
+}
+
+/* Base track border */
+.star-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 var(--star-border-thickness, 1px) var(--star-border-track, rgba(255, 255, 255, 0.1));
+  pointer-events: none;
+}
+
+/* Light canvas containing traveling star and photon dust */
+.star-border__light {
+  position: absolute;
+  top: -48px;
+  left: -48px;
+  z-index: 1;
+  width: calc(100% + 96px);
+  height: calc(100% + 96px);
+  pointer-events: none;
+}
+
+button.star-border,
+a.star-border {
+  cursor: pointer;
+}
+
+.star-border:focus-visible {
+  outline: 2px solid var(--star-border-track, #06b6d4);
+  outline-offset: 3px;
+}
+
+.star-border:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+  box-shadow: none !important;
+}
+
+/* ==========================================================================
+   NEUMORPHISM COSMIC STYLING
+   Tactile cyber-physical extrusion with dual inner/outer shadows
+   ========================================================================== */
+.star-border--neumorphic {
+  box-shadow: 
+    4px 4px 12px rgba(0, 0, 0, 0.85),
+    -2px -2px 6px rgba(255, 255, 255, 0.04),
+    inset 1px 1px 1.5px rgba(255, 255, 255, 0.1),
+    inset -1px -1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.star-border--neumorphic:hover:not(:disabled) {
+  box-shadow: 
+    6px 6px 18px rgba(0, 0, 0, 0.95),
+    -3px -3px 8px rgba(6, 182, 212, 0.15),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.18),
+    inset -1px -1px 3px rgba(0, 0, 0, 0.7);
+  transform: translateY(-1px);
+}
+
+.star-border--neumorphic:active:not(:disabled) {
+  box-shadow: 
+    inset 2px 2px 6px rgba(0, 0, 0, 0.9),
+    inset -1px -1px 3px rgba(255, 255, 255, 0.05);
+  transform: translateY(1px);
+}
