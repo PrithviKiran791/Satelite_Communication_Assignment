@@ -36,18 +36,6 @@ export default function AppSidebar({
 
   const links = [
     {
-      label: "Landing Page",
-      icon: (
-        <Globe2
-          className={`h-4 w-4 shrink-0 transition-colors ${
-            activeTab === "Landing" ? "text-black" : "text-[#B8B8B8] group-hover/sidebar:text-white"
-          }`}
-        />
-      ),
-      onClick: () => onSelectTab?.("Landing"),
-      isActive: activeTab === "Landing",
-    },
-    {
       label: "Simulation Config",
       icon: (
         <Satellite className="h-4 w-4 shrink-0 text-[#B8B8B8] group-hover/sidebar:text-white transition-colors" />
