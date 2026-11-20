@@ -559,6 +559,32 @@ npm run build
 npm run preview
 ```
 
+### Deploying to Vercel
+
+SATLINK is pre-configured for one-click deployment on [Vercel](https://vercel.com/):
+
+#### Method A: Deploy via Vercel Web Dashboard (Recommended)
+
+1. Navigate to [vercel.com/new](https://vercel.com/new).
+2. Connect your GitHub account and import the repository:
+   `https://github.com/PrithviKiran791/Satelite_Communication_Assignment`
+3. Vercel automatically detects the project settings via the included `vercel.json`:
+   - **Framework Preset:** Vite
+   - **Build Command:** `npm run build`
+   - **Output Directory:** `dist`
+   - **Install Command:** `npm install`
+4. Click **Deploy**. Your mission control simulator will be live worldwide on Vercel's Edge Network with global CDN caching.
+
+#### Method B: Deploy via Vercel CLI
+
+```bash
+# Install Vercel CLI globally
+npm i -g vercel
+
+# Deploy directly to production
+vercel --prod
+```
+
 ### Linting
 
 ```bash
